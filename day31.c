@@ -47,10 +47,15 @@ void display(int top,int stack[]){
 }
 }
 
-void creation(int stack[],int *top){
+void creation(int stack[],int *top,int x){
+    *top=-1;
     int n;
     printf("enter the number of value you want intitally in the stack:\n");
     scanf("%d",&n);
+    if(n>x){
+        printf("can't enter the data more than the pre declared size of stack\n");
+    }
+    else{
     int value;
     for(int i=0;i<n;i++){
 
@@ -59,6 +64,7 @@ void creation(int stack[],int *top){
         (*top)++;
         stack[*top]=value;
     }
+}
 }
 
 int main(){
@@ -79,7 +85,7 @@ printf("enter the maximum number of data you want to input in the stack\n");
         scanf("%d",&choice);
     switch(choice){
         case 1: {
-    creation(stack,&top); break;
+    creation(stack,&top,n); break;
         }
         case 2: push(stack,n,&top);break;
    case 3: pop(stack,&top);break;
