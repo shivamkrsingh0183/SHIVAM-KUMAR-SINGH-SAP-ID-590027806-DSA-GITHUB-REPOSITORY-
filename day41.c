@@ -1,107 +1,130 @@
-#include<stdio.h>
+#include<Stdio.h>
 #include<stdlib.h>
-
 
 struct node{
     int data;
-    struct node  *rear;
-    struct node *front;
     struct node *next;
-};
-struct node *creation(struct node **rear,struct node **front){
-    int n;
-    
 
-    printf("enter the number of data you want in the queue\n");
+};
+void creation(struct node **front ,struct node **rear){
+    int n;
+    printf("enter thenumber of nodes you want to create in the linnkedlist\n");
     scanf("%d",&n);
+
+
+    struct node *temp;
     for(int i=0;i<n;i++){
         int value;
-        printf("enter the value on the queue\n");
+        printf("enter value:\n");
         scanf("%d",&value);
         struct node *newnode=(struct node*)malloc(sizeof(struct node));
-
-
-
-
         newnode->data=value;
         newnode->next=NULL;
-        if(*front==NULL && *rear==NULL){
-           *front=newnode;
-           *rear=newnode;
+
+
+
+
+        if(*front==NULL){
+        *front=newnode;
+        *rear=newnode;
         }
         else{
             (*rear)->next=newnode;
             *rear=newnode;
         }
     }
-             printf("queue creation is successfull\n");
-
- 
-    return *front;
-    return *rear;
-}
-
-struct node *display(struct node *front,struct node *rear){
-    if(front==NULL){
-        printf("queue is empty\n");
-    }
-
-    else{
     
+}
+
+void  enqueue(struct node **front,struct node **rear){
+    int value;
+    printf("enter the value you want enqueue in the linkedlist:\n");
+    scanf("%d",&value);
+    struct node *insertnode=(struct node*)malloc(sizeof(struct node));
 
 
-   struct node *temp=front;
-   printf("queue you created is:\n");
-   while(temp!=NULL){
+    insertnode->data=value;
+    insertnode->next=NULL;
+    if(*front==NULL){
+        *front=insertnode;
 
-    printf("%d\n",temp->data);
-    temp=temp->next;
-   }
+        *rear=insertnode; 
     }
-    return front;
-    return rear;
+    else{
+    (*rear)->next=insertnode;
+    insertnode->next=NULL;
+
+    }
 }
 
 
 
-struct node *delete(struct node **front,struct node **rear){
-    if(*front==NULL&&*rear==NULL){
+
+void dequeue(struct node **front,struct node **rear){
+
+
+
+    if(*front==NULL){
         printf("queue is empty\n");
+        return;
     }
     else{
         struct node *temp=*front;
-        *front=(*front)->next;
 
+       int value=temp->data;
+
+        (*front)=(*front)->next;
         free(temp);
-         printf("deletion from queue is successfull\n");
-    }
-   
-    return *front;
-    return *rear;
+        if(*front==NULL){
+            *rear=NULL;
+        }
 
+
+        printf("dequeued element from queue is:%d\n",value);
+    }
+}
+
+void display(struct node *front,struct node *rear){
+    if(front==NULL){
+        printf("queue is empty\n");
+        return;
+    }
+
+
+struct node *temp=front;
+printf("queue you created is:\n");
+while(temp!=NULL){
+    printf("%d\n",temp->data);
+    temp=temp->next;
+
+}
 }
 int main(){
     struct node *rear=NULL;
 
-
     struct node *front=NULL;
     int choice;
     do{
-        printf("enter your choice\n");
+        printf("enter your choice:\n");
         printf("1:creation\n");
-        printf("2:deletion\n");
-        printf("3:display\n");
+        printf("2:enqueue\n");
+        printf("3:dequeue\n");
+        printf("4:display\n");
 
 
-        printf("4:exit\n");
+        printf("5:exit\n");
         scanf("%d",&choice);
         switch(choice){
-            case 1:creation(&rear,&front);break;
-            case 2:delete(&front,&rear);break;
-            case 3:display(front,rear);break;
-            case 4:printf("exit\n");break;
-            default:printf("please enter a valid choice\n");break;
+            case 1:creation(&front,&rear);break;
+            case 2:enqueue(&front,&rear);break;
+            case 3:dequeue(&front,&rear);break;
+            case 4:display(front,rear);break;
+            case 5:printf("exit\n");break;
+
+
+            default:printf("please enter a valid choice\n");
         }
-    }while(choice!=4);
-    return 0;
+    }while(choice!=5);
+return 0; 
+
 }
